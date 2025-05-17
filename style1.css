@@ -1,38 +1,69 @@
+/* General styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
     text-align: center;
-}
-
-.container {
-    background: white;
     padding: 20px;
-    width: 300px;
-    margin: 50px auto;
-    box-shadow: 0px 0px 10px gray;
-    border-radius: 10px;
 }
 
+/* Main container */
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    width: 350px;
+    margin: 50px auto;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Heading */
 h2 {
     margin-bottom: 20px;
+    font-size: 24px;
 }
 
-label, select {
+/* Labels & Select dropdown */
+label {
     display: block;
-    margin: 10px auto;
-    width: 80%;
+    margin: 15px 0 5px;
+    font-weight: bold;
 }
 
+select {
+    display: block;
+    width: 85%;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 5px;
+    border: none;
+    background: white;
+    font-size: 16px;
+}
+
+/* Button Styling */
 button {
     margin-top: 20px;
-    padding: 10px;
-    background-color: #007bff;
+    padding: 12px;
+    width: 90%;
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(to right, #ff512f, #dd2476);
     color: white;
     border: none;
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
-    background-color: #0056b3;
+    background: linear-gradient(to right, #dd2476, #ff512f);
+    transform: scale(1.05);
 }
 
+/* Adding slight animation */
+select, button {
+    transition: all 0.3s ease-in-out;
+}
