@@ -3,14 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-    <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-        h1 { color: #5cb85c; }
-    </style>
+    <title>Bus Tracking - Select Role</title>
+    <link rel="stylesheet" href="styles1.css">
 </head>
 <body>
-    <h1>Welcome to Our Website!</h1>
-    <p>Thank you for signing up. Enjoy your experience!</p>
+    <div class="container">
+        <h2>Select Your Role and Route</h2>
+        <label for="role">Choose Role:</label>
+        <select id="role">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <label for="route">Select Route:</label>
+        <select id="route">
+            <option value="route1">Route 1</option>
+            <option value="route2">Route 2</option>
+            <option value="route3">Route 3</option>
+        </select>
+
+        <button onclick="submitChoice()">Proceed</button>
+    </div>
+
+    <script src="script1.js"></script>
 </body>
 </html>
