@@ -1,42 +1,55 @@
-// Dummy bus route coordinates (or simulated ones for now)
-// Dummy bus location data
-const simulatedData = [
-  { number: "UK07 AB 1234", lat: 30.2711, lng: 78.0533 },
-  { number: "UK07 XY 5678", lat: 30.2903, lng: 78.0132 },
-  { number: "UK07 MN 9101", lat: 30.3256, lng: 78.0421 }
+// Simulated bus routes (each with multiple points)
+const busRoutes = [
+  {
+    number: "UK07 AB 1234",
+    path: [
+      [30.2711, 78.0533],
+      [30.2720, 78.0450],
+      [30.2735, 78.0300],
+      [30.2750, 78.0250],
+      [30.2903, 78.0132]
+    ],
+    index: 0
+  },
+  {
+    number: "UK07 XY 5678",
+    path: [
+      [30.3256, 78.0421],
+      [30.3200, 78.0380],
+      [30.3150, 78.0350],
+      [30.3100, 78.0300],
+      [30.3050, 78.0250]
+    ],
+    index: 0
+  }
 ];
 
-// Initialize the map
-const map = L.map('map').setView([30.2711, 78.0533], 13);
+const map = L.map("map").setView([30.2711, 78.0533], 13);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors'
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "&copy; OpenStreetMap contributors"
 }).addTo(map);
 
-let markers = [];
+const markers = {};
+const busList = document.getElementById("busList");
 
-// Simulated API response handler
-async function updateBusLocation() {
-  try {
-    // Simulate fetching data with a slight delay
-    const data = await new Promise((resolve) => {
-      setTimeout(() => resolve(simulatedData), 1000);
-    });
+// Create list and initial markers
+busRoutes.forEach((bus) => {
+  const li = document.createElement("li");
+  li.textContent = bus.number;
+  busList.appendChild(li);
 
-    // Clear old markers
-    markers.forEach(marker => map.removeLayer(marker));
-    markers = [];
+  const [lat, lng] = bus.path[0];
+  markers[bus.number] = L.marker([lat, lng]).addTo(map).bindPopup(`Bus ${bus.number}`);
+});
 
-    // Add new markers
-    data.forEach(bus => {
-      const marker = L.marker([bus.lat, bus.lng]).addTo(map);
-      marker.bindPopup(`Bus ${bus.number}`);
-      markers.push(marker);
-    });
-  } catch (error) {
-    console.error("Simulated fetch failed:", error);
-  }
+// Animate movement
+function moveBuses() {
+  busRoutes.forEach((bus) => {
+    bus.index = (bus.index + 1) % bus.path.length;
+    const [lat, lng] = bus.path[bus.index];
+    markers[bus.number].setLatLng([lat, lng]);
+  });
 }
 
-setInterval(updateBusLocation, 5000);
-updateBusLocation();
+setInterval(moveBuses, 3000); // Update every 3 seconds
