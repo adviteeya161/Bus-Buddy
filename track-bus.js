@@ -1,10 +1,9 @@
 // Dummy bus route coordinates (or simulated ones for now)
-const route = [
-  [30.2711, 78.0533], // Graphic Era
-  [30.2735, 78.0300], // Clement Town
-  [30.2903, 78.0132], // ISBT
-  [30.3180, 78.0330], // Paltan Bazaar
-  [30.3256, 78.0421]  // Clock Tower
+// Dummy bus location data
+const simulatedData = [
+  { number: "UK07 AB 1234", lat: 30.2711, lng: 78.0533 },
+  { number: "UK07 XY 5678", lat: 30.2903, lng: 78.0132 },
+  { number: "UK07 MN 9101", lat: 30.3256, lng: 78.0421 }
 ];
 
 // Initialize the map
@@ -14,16 +13,17 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// Optional: Store existing markers to remove/update them later
 let markers = [];
 
-// Fetch real-time or simulated bus data and update markers
+// Simulated API response handler
 async function updateBusLocation() {
   try {
-    const response = await fetch('/api/bus-locations'); // Replace with actual API route
-    const data = await response.json();
+    // Simulate fetching data with a slight delay
+    const data = await new Promise((resolve) => {
+      setTimeout(() => resolve(simulatedData), 1000);
+    });
 
-    // Remove previous markers
+    // Clear old markers
     markers.forEach(marker => map.removeLayer(marker));
     markers = [];
 
@@ -34,12 +34,9 @@ async function updateBusLocation() {
       markers.push(marker);
     });
   } catch (error) {
-    console.error("Error fetching bus data:", error);
+    console.error("Simulated fetch failed:", error);
   }
 }
 
-// Update map every 5 seconds
 setInterval(updateBusLocation, 5000);
-
-// Initial load
 updateBusLocation();
