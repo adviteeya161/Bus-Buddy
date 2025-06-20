@@ -1,4 +1,3 @@
-// Simulated bus routes (each with multiple points)
 const busRoutes = [
   {
     number: "UK07 AB 1234",
@@ -33,17 +32,20 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 const markers = {};
 const busList = document.getElementById("busList");
 
-// Create list and initial markers
 busRoutes.forEach((bus) => {
   const li = document.createElement("li");
-  li.textContent = bus.number;
+  const a = document.createElement("a");
+  a.textContent = bus.number;
+  a.href = `bus-details.html?bus=${encodeURIComponent(bus.number)}`;
+  a.style.textDecoration = "none";
+  a.style.color = "#333";
+  li.appendChild(a);
   busList.appendChild(li);
 
   const [lat, lng] = bus.path[0];
   markers[bus.number] = L.marker([lat, lng]).addTo(map).bindPopup(`Bus ${bus.number}`);
 });
 
-// Animate movement
 function moveBuses() {
   busRoutes.forEach((bus) => {
     bus.index = (bus.index + 1) % bus.path.length;
@@ -52,4 +54,4 @@ function moveBuses() {
   });
 }
 
-setInterval(moveBuses, 3000); // Update every 3 seconds
+setInterval(moveBuses, 3000);
